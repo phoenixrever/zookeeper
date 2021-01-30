@@ -8,9 +8,9 @@ import java.util.Arrays;
 
 @Slf4j
 public class HelloZK {
-    private static final String CONNECT_STRING = "192.168.1.100:2181";
-    private static final int SESSION_TIMEOUT = 3 * 1000;
-    private static final String NODE_PATH = "/hellodsfd";
+    private static final String CONNECT_STRING = "localhost:2181";
+    private static final int SESSION_TIMEOUT = 3 * 10000;
+    private static final String NODE_PATH = "/hello";
     private static final String NODE_VALUE = "value11";
 
     public static void main(String[] args) {
@@ -25,7 +25,7 @@ public class HelloZK {
             }
             String znodeValue = helloZK.getZnodeValue(zookeeper, NODE_PATH);
             System.out.println(znodeValue);
-            log.info(znodeValue+"-------------------");
+            log.error(znodeValue+"-------------------");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -59,7 +59,9 @@ public class HelloZK {
 
     public String getZnodeValue(ZooKeeper zooKeeper, String nodePath) throws KeeperException, InterruptedException {
         byte[] data = zooKeeper.getData(nodePath, false, new Stat());
-//        String s=new String(data);
-        return Arrays.toString(data);
+        String s=new String(data);
+        //此方法不可以[18,11] 真是=就是数据了 包括string.valueof
+//        String s = Arrays.toString(data);
+        return s;
     }
 }
